@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Pure Notes - Skeleton</title>
+		<link rel="stylesheet" href="styles/variables.css">
+		<link rel="stylesheet" href="styles/app.css">
+	</head>
+	<body>
+		<header>
+			<h1>Pure Notes</h1>
+			<input id="search" type="text" placeholder="Search notes..." aria-label="Search notes">
+		</header>
+
+		<main id="app" class="layout">
+			<aside class="sidebar" aria-label="Notes list">
+				<button id="newNote">New Note</button>
+				<ul id="noteList" role="list"></ul>
+			</aside>
+
+			<section class="editor" aria-label="Note editor">
+				<form id="editorForm" autocomplete="off">
+					<input id="noteInput" name="title" placeholder="Title"/>
+					<textarea id="noteBody" name="body" rows="10" placeholder="Write your notes..."></textarea>
+					<div class="controls">
+						<button type="button" id="saveBtn">Save</button>
+						<button type="button" id="deleteBtn">Delete</button>
+					</div>
+				</form>
+			</section>
+		</main>
+
+		<script type="module" src="src/app.js"></script>
+	</body>
+</html>
