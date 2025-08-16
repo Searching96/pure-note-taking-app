@@ -21,11 +21,12 @@
 
 			<section class="editor" aria-label="Note editor">
 				<form id="editorForm" autocomplete="off">
-					<input id="noteInput" name="title" placeholder="Title"/>
-					<textarea id="noteBody" name="body" rows="10" placeholder="Write your notes..."></textarea>
+					<input id="noteTitle" name="title" placeholder="Note title..." aria-label="Note title" required/>
+					<textarea id="noteBody" name="body" rows="10" placeholder="Write your notes..." aria-label="Note content"></textarea>
 					<div class="controls">
-						<button type="button" id="saveBtn">Save</button>
-						<button type="button" id="deleteBtn">Delete</button>
+						<button type="button" id="saveBtn" class="primary-btn">Save</button>
+						<button type="button" id="deleteBtn" class="secondary-btn">Delete</button>
+						<span id="status" role="status" aria-live="polite"></span>
 					</div>
 				</form>
 			</section>

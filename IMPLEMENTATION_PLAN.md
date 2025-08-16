@@ -55,9 +55,9 @@ pure-notetaking-app/
 Implementation phases
 ---------------------
 Phase 1 — Skeleton (30–60m)
-- Create `index.html` with semantic structure and placeholders.
-- Add `styles/variables.css` and a minimal `app.css` layout grid.
-- Add `src/app.js` to bootstrap and attach event listeners.
+- [ ] Create `index.html` with semantic structure and placeholders.
+- [ ] Add `styles/variables.css` and a minimal `app.css` layout grid.
+- [x] Add `src/app.js` to bootstrap and attach event listeners. (implemented: `src/app.js` exists and wires the New Note button)
 
 Phase 2 — Core features (1–2 hours)
 - Implement `src/store.js` with `loadNotes()` and `saveNotes()`.
