@@ -1,32 +1,335 @@
-.header, header { padding: 1rem; background: var(--panel); border-bottom: 1px solid #e6e9ee; }
-header { display: flex; align-items: center; gap: 1rem; justify-content: space-between; padding: 1rem; }
+/* Pure Notes - Phase 1 Complete Styles */
+
+/* Global reset and base styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: var(--font-base);
+    line-height: var(--line-height);
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus management */
+:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+}
+
+/* Header */
+header {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap);
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+header h1 {
+    margin: 0;
+    font-size: var(--font-lg);
+    font-weight: 600;
+    color: var(--text);
+}
+
+#search {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: var(--font-sm);
+    width: 280px;
+    transition: var(--transition);
+}
+
+#search:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 1px var(--border-focus);
+}
+
+/* Main layout */
 .layout {
     max-width: var(--max-width);
-    margin: 1rem auto;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: var(--sidebar-width) 1fr;
     gap: var(--gap);
+    padding: var(--gap);
     align-items: start;
-    padding: 0 1rem;
+    min-height: calc(100vh - 80px);
 }
+
+/* Sidebar */
 .sidebar {
     background: var(--panel);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 0.75rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    padding: var(--gap);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: calc(80px + var(--gap));
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
 }
+
+#noteList {
+    list-style: none;
+    margin: var(--gap) 0 0 0;
+    padding: 0;
+}
+
+#noteList li {
+    margin-bottom: var(--gap-sm);
+}
+
+.note-item {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    color: var(--text);
+}
+
+.note-item:hover {
+    background: var(--bg);
+    border-color: var(--accent);
+}
+
+.note-item.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+.note-title {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.note-preview {
+    font-size: var(--font-sm);
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.note-item.active .note-preview {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Editor */
 .editor {
     background: var(--panel);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 0.75rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03)
+    padding: var(--gap);
+    box-shadow: var(--shadow);
 }
-#noteTitle{ width: 100%; padding: 0.5rem; margin-bottom: 0.5rem }
-#noteBody{ width: 100%; padding: 0.5rem; min-height: 240px }
-.controls{ display: flex; gap: 0.5rem; margin-top: 0.5rem }
-button{ cursor: pointer }
-@media ( max-width: 700px ) {
-    .layout{ grid-template-columns:1fr }
-    .sidebar{ order:2 }
-    .editor{ order:1 }
+
+#editorForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+}
+
+#noteTitle {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: var(--font-lg);
+    font-weight: 500;
+    transition: var(--transition);
+    background: var(--bg);
+}
+
+#noteTitle:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 1px var(--border-focus);
+    background: var(--panel);
+}
+
+#noteBody {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: var(--font-base);
+    line-height: var(--line-height);
+    resize: vertical;
+    min-height: 300px;
+    transition: var(--transition);
+    background: var(--bg);
+}
+
+#noteBody:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 1px var(--border-focus);
+    background: var(--panel);
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    flex-wrap: wrap;
+}
+
+/* Buttons */
+button {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    font-size: var(--font-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.primary-btn {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+.primary-btn:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.secondary-btn {
+    background: transparent;
+    color: var(--danger);
+    border-color: var(--border);
+}
+
+.secondary-btn:hover {
+    background: var(--danger);
+    color: white;
+    border-color: var(--danger);
+}
+
+#newNote {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem;
+}
+
+#status {
+    font-size: var(--font-sm);
+    color: var(--text-muted);
+    margin-left: auto;
+}
+
+#status.success {
+    color: var(--success);
+}
+
+#status.error {
+    color: var(--danger);
+}
+
+/* Button states */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+}
+
+.secondary-btn:disabled {
+    background: transparent !important;
+    color: var(--text-muted) !important;
+    border-color: var(--border) !important;
+}
+
+/* Empty state styles */
+.empty-state {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2rem;
+    font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .layout {
+        grid-template-columns: 1fr;
+        gap: var(--gap-sm);
+        padding: var(--gap-sm);
+    }
+
+    .sidebar {
+        order: 2;
+        position: static;
+        max-height: none;
+    }
+
+    .editor {
+        order: 1;
+    }
+
+    #search {
+        width: 200px;
+    }
+
+    header {
+        padding: 0.75rem;
+    }
+
+    header h1 {
+        font-size: var(--font-base);
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        gap: var(--gap-sm);
+    }
+    
+    #search {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .controls button {
+        justify-content: center;
+    }
 }
