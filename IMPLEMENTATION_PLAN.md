@@ -52,31 +52,33 @@ pure-note-taking-app/
    └─ utils.test.js
 ```
 
+
+
 Implementation phases
 ---------------------
-Phase 1 — Skeleton (30–60m) ✅ **COMPLETED**
+**Phase 1 — Skeleton (30–60m)**
 - [x] Create `index.html` with semantic structure and placeholders.
 - [x] Add `styles/variables.css` and a minimal `app.css` layout grid.
 - [x] Add `src/app.js` to bootstrap and attach event listeners.
 
-Phase 2 — Core features (1–2 hours)
+**Phase 2 — Core features (1–2 hours)**
 - [ ] Implement `src/store.js` with `loadNotes()` and `saveNotes()`.
-- [ ] Implement `src/utils.js` (debounce, sanitizeHTML, simple uuid).
+- [x] Implement `src/utils.js` (debounce, sanitizeHTML, simple uuid).
 - [ ] Implement `src/ui.js` to render notes list, editor, and wire CRUD actions.
 - [ ] Ensure keyboard shortcuts and basic focus management.
 
-Phase 3 — Accessibility & UX (30–60m)
-- Add ARIA attributes, `aria-live` status messages, and focus traps where needed.
-- Implement visible focus styles and a keyboard-only usage walkthrough in `README.md`.
+**Phase 3 — Accessibility & UX (30–60m)**
+- [ ] Add ARIA attributes, `aria-live` status messages, and focus traps where needed.
+- [ ] Implement visible focus styles and a keyboard-only usage walkthrough in `README.md`.
 
-Phase 4 — Performance, security & tests (30–60m)
-- Add debounce for search and autosave.
-- Use `textContent`/sanitizer to prevent XSS.
-- Add `tests/utils.test.js` for `debounce` and `sanitizeHTML`.
+**Phase 4 — Performance, security & tests (30–60m)**
+- [ ] Add debounce for search and autosave.
+- [ ] Use `textContent`/sanitizer to prevent XSS.
+- [ ] Add `tests/utils.test.js` for `debounce` and `sanitizeHTML`.
 
-Phase 5 — Final docs and polish (15–30m)
-- Update `README.md` to include the learning guide, run steps, and next steps.
-- Add the small smoke test instructions and map requirements to status.
+**Phase 5 — Final docs and polish (15–30m)**
+- [ ] Update `README.md` to include the learning guide, run steps, and next steps.
+- [ ] Add the small smoke test instructions and map requirements to status.
 
 Development details (per file)
 -----------------------------
