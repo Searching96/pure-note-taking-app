@@ -1,0 +1,34 @@
+{
+	"name": "pure-note-taking-app",
+	"version": "1.0.0",
+	"description": "A pure HTML/CSS/JS note-taking app for learning frontend fundamentals",
+	"type": "module",
+	"scripts": {
+		"test": "vitest",
+		"test:run": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"test:watch": "vitest --watch",
+		"dev": "python -m http.server 8000",
+		"start": "start index.html"
+	},
+	"keywords": [
+		"javascript",
+		"html",
+		"css",
+		"notes",
+		"vanilla-js",
+		"frontend",
+		"education"
+	],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"vitest": "^1.6.0",
+		"jsdom": "^24.1.0",
+		"@vitest/coverage-v8": "^1.6.0"
+	},
+	"engines": {
+		"node": ">=18.0.0"
+	}
+}
+
