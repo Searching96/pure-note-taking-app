@@ -13,10 +13,10 @@ Checklist (requirements)
 - [ ] Write a Markdown guide that teaches core HTML/CSS/JS topics through the app (the user already requested this; the guide will be included in `README.md`).
 - [x] Produce an implementation plan (this file).
 - [x] Implement app skeleton (`index.html`, `styles/*`, `src/*`).
-- [ ] Implement persistence (`src/store.js`) with `localStorage` abstraction.
+- [x] Implement persistence (`src/store.js`) with `localStorage` abstraction.
 - [ ] Implement UI rendering and event handling (`src/ui.js`, `src/app.js`).
 - [ ] Add utilities (`src/utils.js`) with tests for `debounce` and `sanitizeHTML`.
-- [ ] Include accessibility, performance, and security checks and small smoke tests.
+- [x] Include accessibility, performance, and security checks and small smoke tests.
 
 Assumptions
 -----------
@@ -62,7 +62,7 @@ Implementation phases
 - [x] Add `src/app.js` to bootstrap and attach event listeners.
 
 **Phase 2 — Core features (1–2 hours)**
-- [ ] Implement `src/store.js` with `loadNotes()` and `saveNotes()`.
+- [x] Implement `src/store.js` with `loadNotes()` and `saveNotes()`.
 - [x] Implement `src/utils.js` (debounce, sanitizeHTML, simple uuid).
 - [ ] Implement `src/ui.js` to render notes list, editor, and wire CRUD actions.
 - [ ] Ensure keyboard shortcuts and basic focus management.

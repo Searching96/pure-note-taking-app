@@ -1,5 +1,21 @@
+import { loadNotes, saveNotes, clearNotes } from './store.js';
+import { debounce } from './utils.js';
+import {
+  renderNotesList,
+  renderNoteInEditor,
+  filterNotes,
+  showStatus,
+  createNoteObject,
+  updateNoteObject
+} from './ui.js';
+
+// Application state
+let notes = [];
+let currentNote = null;
+let searchQuery = '';
+
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('App ready - Pure Notes Skeleton');
+  console.log('App ready - Pure Notes');
 
   // Get DOM elements with error checking
   const elements = {
@@ -14,99 +30,149 @@ document.addEventListener('DOMContentLoaded', () => {
     status: document.getElementById('status'),
   }
 
-  // Check for missing elements
-  const missingElements = Object.entries(elements)
-    .filter(([key, el]) => !el)
-    .map(([key]) => key);
+  // Initialize app
+  function init() {
+    notes = loadNotes();
+    renderApp();
+    showStatus(elements.status, 'App ready!', 'success');
+  }
+  
+  // Render the entire app
+  function renderApp() {
+    const filteredNotes = filterNotes(notes, searchQuery);
+    renderNotesList(elements.noteList, filteredNotes, currentNote?.id);
 
-  if (missingElements.length > 0) {
-    console.error('Missing DOM elements:', missingElements);
-    return;
+    // Update button states
+    elements.deleteBtn.disabled = !currentNote;
+    elements.saveBtn.disabled = !hasUnsavedChanges();
   }
 
-  // Status message helper
-  function showStatus(message, type = 'info') {
-    const status = elements.status;
-    status.textContent = message;
-    status.className = type;
+  function hasUnsavedChanges() {
+    const title = elements.noteTitle.value.trim();
+    const content = elements.noteBody.value.trim();
 
-    // Clear after 3 seconds
-    setTimeout(() => {
-      status.textContent = '';
-      status.className = '';
-    }, 3000);
+    if (!currentNote) {
+      return title || content; // New note with content
+    }
+
+    return title !== currentNote.title || content !== currentNote.content;
   }
 
-  // New Note functionality
-  elements.newNoteBtn.addEventListener('click', () => {
-    console.log('New note clicked');
+  // Save current note 
+  function saveCurrentNote() {
+    const title = elements.noteTitle.value.trim();
+    const content = elements.noteBody.value.trim();
 
-    // Clear form
-    elements.noteTitle.value = '';
-    elements.noteBody.value = '';
+    if (!title && !content) {
+      showStatus(elements.status, 'Cannot save empty note', 'error');
+      return;
+    }
 
-    // Focus on title input
-    elements.noteTitle.focus();
+    if (currentNote) {
+      // Update existing note
+      currentNote = updateNoteObject(currentNote, title, content);
+      const index = notes.findIndex(n => n.id === currentNote.id);
+      if (index !== -1) {
+        notes[index] = currentNote; // Update existing note
+      } 
+    } else {
+      // Create new note
+      currentNote = createNoteObject(title, content);
+      notes.unshift(currentNote);
+    }
 
-    // Show status
-    showStatus('Ready to create new note', 'success');
-  })
+    saveNotes(notes);
+    renderApp();
+    showStatus(elements.status, 'Note saved!', 'success');
+  }
 
-  // Basic form interaction
-  elements.noteTitle.addEventListener('input', () => {
-    // Enable save button when there is content
-    const hasContent = elements.noteTitle.value.trim() || elements.noteBody.value.trim();
-    elements.saveBtn.disabled = !hasContent;
-  });
+  // Delete current note
+  function deleteCurrentNote() {
+    if (!currentNote) return;
 
-  // Placeholder for save functionality (Phase 2)
+    if (confirm('Are you sure you want to delete this note?')) {
+      notes = notes.filter(n => n.id !== currentNote.id);
+      saveNotes(notes);
+
+      // Clear editor and reset current note
+      currentNote = null;
+      renderNoteInEditor(null, elements.noteTitle, elements.noteBody);
+      renderApp();
+
+      showStatus(elements.status, 'Note deleted!', 'success');
+    }
+  }
+
+  // Create new note
+  function createNewNote() {
+    currentNote = null;
+    renderNoteInEditor(null, elements.noteTitle, elements.noteBody);
+    renderApp();
+    showStatus(elements.status, 'Ready to create new note', 'info');
+  }
+
+  // Debounced auto-save
+  const autoSave = debounce(() => {
+    if (hasUnsavedChanges()) {
+      saveCurrentNote();
+    }
+  }, 2000);
+
+  elements.newNoteBtn.addEventListener('click', createNewNote);
+
   elements.saveBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const title = elements.noteTitle.value.trim();
-    const body = elements.noteBody.value.trim();
+    saveCurrentNote();
+  });
 
-    if (title || body) {
-      console.log('Save clicked:', { title, body });
-      showStatus('Implementing soon...', 'info');
-    } else {
-      showStatus('Please add some content first', 'error');
+  // Note selection from list
+  elements.noteList.addEventListener('click', (e) => {
+    const notePreview = e.target.closest('.note-preview');
+    if (notePreview) {
+      const noteId = notePreview.dataset.noteId;
+      const note = notes.find(n => n.id === noteId);
+      if (note) {
+        currentNote = note;
+        renderNoteInEditor(note, elements.noteTitle, elements.noteBody);
+        renderApp();
+      }
     }
   });
 
-  // Placeholder for delete functionality (Phase 2)
-  elements.deleteBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    console.log('Delete clicked');
-    showStatus('Implementing soon...', 'info');
-  })
+  // Auto-save on input
+  elements.noteTitle.addEventListener('input', () => {
+    renderApp(); // Update save button state
+    autoSave();
+  });
 
-  // Search input placeholder (Phase 2)
+  elements.noteBody.addEventListener('input', () => {
+    renderApp(); // Update save button state
+    autoSave();
+  });
+
+  // Search functionality
+  const debouncedSearch = debounce((query) => {
+    searchQuery = query;
+    renderApp();
+  }, 300);
+
   elements.searchInput.addEventListener('input', (e) => {
-    const query = e.target.value;
-    console.log('Search: ', query);
-    if (query) {
-      showStatus('Implementing soon...', 'info');
-    }
+    debouncedSearch(e.target.value);
   });
 
   // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
-    // Ctrl+N or Cmd+N for new note
     if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
       e.preventDefault();
-      elements.newNoteBtn.click();
+      createNewNote();
     }
 
-    // Ctrl+S or Cmd+S for save
     if ((e.ctrlKey || e.metaKey) && e.key === 's') {
       e.preventDefault();
-      elements.saveBtn.click();
+      saveCurrentNote();
     }
   });
 
-  // Initialize save button state
-  elements.saveBtn.disabled = true;
-
-  // Show ready status
-  showStatus('App ready - Click "New Note" to begin', 'success');
+  // Initialize the app
+  init();
 });
