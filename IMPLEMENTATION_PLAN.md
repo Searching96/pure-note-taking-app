@@ -68,8 +68,8 @@ Implementation phases
 - [x] Ensure keyboard shortcuts and basic focus management.
 
 **Phase 3 — Accessibility & UX (30–60m)**
-- [ ] Add ARIA attributes, `aria-live` status messages, and focus traps where needed.
-- [ ] Implement visible focus styles and a keyboard-only usage walkthrough in `README.md`.
+- [x] Add ARIA attributes, `aria-live` status messages, and focus traps where needed.
+- [x] Implement visible focus styles and a keyboard-only usage walkthrough in `README.md`.
 
 **Phase 4 — Performance, security & tests (30–60m)**
 - [ ] Add debounce for search and autosave.
