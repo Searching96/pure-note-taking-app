@@ -27,7 +27,7 @@
 				   aria-label="Notes navigation">
 				<button id="newNote"
 					    aria-describedby="new-note-help"
-						title="Create new note (Ctrl+Alt+N)">
+						title="Create new note (Esc)">
 					New Note
 				</button>
 				<div id="new-note-help" class="sr-only">
@@ -78,6 +78,15 @@
 						</button>
 						<div id="save-help" class="sr-only">
 							Saves the current note to local storage
+						</div>
+						<button type="button"
+								id="deleteBtn"
+								aria-describedby="delete-help"
+								title="Delete current note">
+							Delete
+						</button>
+						<div id="delete-help" class="sr-only">
+							Permanently deletes the current note
 						</div>
 					</div>
 				</form>

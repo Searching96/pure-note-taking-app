@@ -108,6 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
     currentNote = null;
     renderNoteInEditor(null, elements.noteTitle, elements.noteBody);
     renderApp();
+
+    // Focus management
+    elements.noteTitle.focus();
+    
     showStatus(elements.status, 'Ready to create new note', 'info');
   }
 
@@ -162,7 +166,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.altKey && e.key === 'n') {
+    if ((e.ctrlKey || e.metaKey) && e.key === '/') {
+      e.preventDefault();
+      elements.searchInput.focus();
+      elements.searchInput.select();
+    }
+
+    // Use Escape for new note (works reliably, no browser conflicts)
+    if (e.key === 'Escape' && !e.target.matches('input, textarea')) {
       e.preventDefault();
       createNewNote();
     }
@@ -170,6 +181,45 @@ document.addEventListener('DOMContentLoaded', () => {
     if ((e.ctrlKey || e.metaKey) && e.key === 's') {
       e.preventDefault();
       saveCurrentNote();
+    }
+
+    // Focus management with F6
+    if (e.key === 'F6') {
+      e.preventDefault();
+      const focusableAreas = [elements.searchInput, elements.noteList, elements.noteTitle];
+      const currentFocus = document.activeElement;
+      let currentIndex = -1;
+
+      focusableAreas.forEach((area, index) => {
+        if (area.contains(currentFocus) || area === currentFocus) {
+          currentIndex = index;
+        }
+      });
+
+      const nextIndex = (currentIndex + 1) % focusableAreas.length;
+      focusableAreas[nextIndex].focus();
+    }
+  });
+
+  // Enhanced keyboard navigation for note list
+  elements.noteList.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      const firstNote = elements.noteList.querySelector('.note-item');
+      if (firstNote) {
+        firstNote.click();
+      }
+    }
+  });
+
+  // Focus management
+  elements.noteList.addEventListener('focus', () => {
+    const activeNote = elements.noteList.querySelector('.note-item.active');
+    const firstNote = elements.noteList.querySelector('.note-item');
+    const targetNote = activeNote || firstNote;
+
+    if (targetNote && document.activeElement === elements.noteList) {
+      targetNote.focus();
     }
   });
 

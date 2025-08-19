@@ -33,17 +33,32 @@ export function renderNotesList(listElement, notes, activeNoteId = null) {
 	sortedNotes.forEach(note => {
 		const li = document.createElement('li');
 		li.className = 'note-item';
+		li.setAttribute('role', 'listitem');
+		li.setAttribute('tabindex', '0');
+		li.setAttribute('aria-describedby', `note-desc-${note.id}`);
+
 		if (note.id === activeNoteId) {
 			li.classList.add('active');
+			li.setAttribute('aria-current', 'true');
+			li.setAttribute('aria-selected', 'true');
 		}
 
 		li.innerHTML = `
 			<div class="note-preview" data-note-id="${note.id}">
-				<h3 class="note-title">${sanitizeHTML(note.title || 'Untitled')}</h3>
-				<p class="note-excerpt">${sanitizeHTML(truncateText(note.content, 80))}</p>
-				<time class="note-date">${formatDate(note.updatedAt)}</time>
+				<h3 class="note-title" id="note-title-${note.id}">
+					${sanitizeHTML(note.title || 'Untitled')}
+				</h3>
+				<p class="note-excerpt" id="note-desc-${note.id}">
+				  ${sanitizeHTML(truncateText(note.content, 80))}
+				</p>
+				<time class="note-date" datetime="${note.updatedAt}">
+					${formatDate(note.updatedAt)}
+				</time>
 			</div>
 		`;
+
+		// Add keyboard navigation
+		li.addEventListener('keydown', handleNoteItemKeydown);
 
 		listElement.appendChild(li);
 	});
@@ -105,7 +120,13 @@ export function showStatus(statusElement, message, type = 'info', duration = 300
 
 	statusElement.textContent = message;
 	statusElement.className = `status ${type}`;
-	statusElement.setAttribute('aria-live', 'polite');
+	statusElement.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
+	statusElement.setAttribute('role', 'status');
+
+	// Announce to screen readers immediately for errors
+	if (type === 'error') {
+		statusElement.setAttribute('aria-atomic', 'true');
+	}
 
 	// Clear after duration
 	setTimeout(() => {
@@ -146,4 +167,41 @@ export function updateNoteObject(note, title, content) {
 		content: content.trim(),
 		updatedAt: new Date().toISOString()
 	};
+}
+
+/**
+ * handle keyboard navigation in note list
+ * @param {KeyboardEvent} e - Keyboard event
+ */
+function handleNoteItemKeydown(e) {
+	const current = e.currentTarget;
+	const noteItems = [...document.querySelectorAll('.note-item')];
+	const currentIndex = noteItems.indexOf(current);
+
+	switch(e.key) {
+		case 'ArrowDown':
+			e.preventDefault();
+			const nextIndex = Math.min(currentIndex + 1, noteItems.length - 1);
+			noteItems[nextIndex]?.focus();
+			break;
+		case 'ArrowUp':
+			e.preventDefault();
+			const prevIndex = Math.max(currentIndex - 1, 0);
+			noteItems[prevIndex]?.focus();
+			break;
+		case 'Enter':
+		case ' ':
+			e.preventDefault();
+			const notePreview = current.querySelector('.note-preview');
+			notePreview?.click();
+			break;
+		case 'Home':
+			e.preventDefault();
+			noteItems[0]?.focus();
+			break;
+		case 'End':
+			e.preventDefault();
+			noteItems[noteItems.length - 1]?.focus();
+			break;
+	}
 }
