@@ -1,6 +1,15 @@
 /**
  * Data persistence layer for Pure note-taking app
- * Handles localStorage operations for notes
+ * Handles localStorage operations and data storage
+ * 
+ * Responsibilities:
+ * - localStorage abstraction for note data
+ * - JSON serialization/deserialization with error handling
+ * - Data validation and structure integrity
+ * - Import/export functionality for notes
+ * - Storage error handling and fallback mechanisms
+ * 
+ * Dependencies: None (pure localStorage operations)
  */
 
 const STORAGE_KEY = 'pure-note-taking-app-data';

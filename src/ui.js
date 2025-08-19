@@ -1,6 +1,17 @@
 /**
  * UI rendering functions for Pure note-taking app
- * Handles DOM manipulation and rendering
+ * Handles DOM manipulation and rendering only
+ * 
+ * Responsibilities:
+ * - DOM element creation and manipulation
+ * - Notes list rendering with accessibility attributes
+ * - Editor form rendering and focus management
+ * - Status message display with ARIA live regions
+ * - Keyboard navigation event handling for UI elements
+ * - Visual feedback and user interface updates
+ * 
+ * Dependencies: utils.js (for formatting and sanitization)
+ * Note: Contains no business logic or state management
  */
 
 import { formatDate, truncateText, sanitizeHTML } from './utils.js';
@@ -92,23 +103,6 @@ export function renderNoteInEditor(note, titleInput, bodyTextarea) {
 }
 
 /**
- * Filter notes based on search query
- * @param {Array} notes - Array of notes to filter
- * @param {string} query - Search query
- * @returns {Array} - Filtered notes
- */
-export function filterNotes(notes, query) {
-	if (!query) return notes;
-
-	const searchTerm = query.toLowerCase().trim();
-
-	return notes.filter(note =>
-		note.title && note.title.toLowerCase().includes(searchTerm) ||
-		note.content && note.content.toLowerCase().includes(searchTerm)
-	);
-}
-
-/**
  * Show status message
  * @param {HTMLElement} statusElement - Status message element
  * @param {string} message - Message to show
@@ -133,40 +127,6 @@ export function showStatus(statusElement, message, type = 'info', duration = 300
 		statusElement.textContent = '';
 		statusElement.className = 'status';
 	}, duration);
-}
-
-/** 
- * Create a new note object
- * @param {string} title - Note title
- * @param {string} content - Note content
- * @returns {Object} - New note object
- */
-export function createNoteObject(title = '', content = '') {
-	const now = new Date().toISOString();
-
-	return {
-		id: `note_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-		title: title.trim(),
-		content: content.trim(),
-		createdAt: now,
-		updatedAt: now
-	};
-}
-
-/**
- * Update existing note object
- * @param {Object} note - Existing note 
- * @param {string} title - New title
- * @param {string} content - New content
- * @returns {Object} - Updated note object
- */
-export function updateNoteObject(note, title, content) {
-	return {
-		...note,
-		title: title.trim(),
-		content: content.trim(),
-		updatedAt: new Date().toISOString()
-	};
 }
 
 /**

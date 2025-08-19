@@ -1,5 +1,16 @@
 /**
- * Utility functions for Pure note-taking app
+ * Pure utility functions for Pure note-taking app
+ * Contains generic, reusable helper functions with no business logic
+ * 
+ * Responsibilities:
+ * - Generic timing utilities (debounce for performance optimization)
+ * - Text processing utilities (sanitization, truncation, formatting)
+ * - Date formatting for display purposes
+ * - ID generation for unique identifiers
+ * - Security utilities (HTML sanitization to prevent XSS)
+ * 
+ * Dependencies: None (pure functions with no external dependencies)
+ * Note: All functions are stateless and side-effect free
  */
 
 /**

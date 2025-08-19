@@ -1,18 +1,81 @@
+/**
+ * Main application logic for Pure note-taking app
+ * Handles business logic, state management, and event coordination
+ * 
+ * Responsibilities:
+ * - Application state (notes array, currentNote, searchQuery)
+ * - Note CRUD operations (create, update, delete)
+ * - Event handling and user interactions
+ * - Keyboard shortcuts and navigation
+ * - Auto-save functionality with debouncing
+ * - Business logic functions (filterNotes, createNoteObject, updateNoteObject)
+ * 
+ * Dependencies: store.js (persistence), utils.js (utilities), ui.js (rendering)
+ */
+
 import { loadNotes, saveNotes, clearNotes } from './store.js';
 import { debounce } from './utils.js';
 import {
   renderNotesList,
   renderNoteInEditor,
-  filterNotes,
-  showStatus,
-  createNoteObject,
-  updateNoteObject
+  showStatus
 } from './ui.js';
 
 // Application state
 let notes = [];
 let currentNote = null;
 let searchQuery = '';
+
+/**
+ * Filter notes based on search query
+ * @param {Array} notes - Array of notes to filter
+ * @param {string} query - Search query
+ * @returns {Array} - Filtered notes
+ */
+function filterNotes(notes, query) {
+  if (!query) return notes;
+
+  const searchTerm = query.toLowerCase().trim();
+
+  return notes.filter(note =>
+    note.title && note.title.toLowerCase().includes(searchTerm) ||
+    note.content && note.content.toLowerCase().includes(searchTerm)
+  );
+}
+
+/**
+ * Create new note object
+ * @param {string} title - Note title
+ * @param {string} content - Note content
+ * @returns {Object} - New note object
+ */
+function createNoteObject(title = '', content = '') {
+  const now = new Date().toISOString();
+
+  return {
+    id: `note_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    title: title.trim(),
+    content: content.trim(),
+    createdAt: now,
+    updatedAt: now
+  };
+}
+
+/**
+ * Update existing note object
+ * @param {Object} note - Existing note 
+ * @param {string} title - New title
+ * @param {string} content - New content
+ * @returns {Object} - Updated note object
+ */
+function updateNoteObject(note, title, content) {
+  return {
+    ...note,
+    title: title.trim(),
+    content: content.trim(),
+    updatedAt: new Date().toISOString()
+  };
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('App ready - Pure Notes');
