@@ -8,30 +8,93 @@
 		<link rel="stylesheet" href="styles/app.css">
 	</head>
 	<body>
-		<header>
-			<h1>Pure Notes</h1>
-			<input id="searchInput" type="text" placeholder="Search notes..." aria-label="Search notes">
+		<header role="banner">
+			<h1 id="app-title">Pure Notes</h1>
+			<div class="search-container">
+				<input id="searchInput"
+					   type="text"
+					   placeholder="Search notes..."
+					   aria-label="Search through your notes by title or content">
+				<div id="search-help" class="sr-only">
+					Type to filter notes. Use arrow keys to navigate results.
+				</div>
+			</div>
 		</header>
 
 		<main id="app" class="layout">
-			<aside class="sidebar" aria-label="Notes list">
-				<button id="newNote">New Note</button>
-				<ul id="noteList" role="list"></ul>
+			<aside class="sidebar"
+				   role="complementary"
+				   aria-label="Notes navigation">
+				<button id="newNote"
+					    aria-describedby="new-note-help"
+						title="Create new note (Ctrl+Alt+N)">
+					New Note
+				</button>
+				<div id="new-note-help" class="sr-only">
+					Creates a new empty note and focuses the title field
+				</div>
+				<ul id="noteList"
+					role="list"
+					aria-label="Your notes"
+					aria-live="polite"
+					tabIndex="0">
+				</ul>
 			</aside>
 
-			<section class="editor" aria-label="Note editor">
-				<form id="editorForm" autocomplete="off">
-					<input id="noteTitle" name="title" placeholder="Note title..." aria-label="Note title" required/>
-					<textarea id="noteBody" name="body" rows="10" placeholder="Write your notes..." aria-label="Note content"></textarea>
-					<div class="controls">
-						<button type="button" id="saveBtn" class="primary-btn">Save</button>
-						<button type="button" id="deleteBtn" class="secondary-btn">Delete</button>
-						<span id="status" role="status" aria-live="polite"></span>
+			<section class="editor" 
+					 role="main"
+					 aria-label="Note editor">
+				<form id="editorForm" 
+				      autocomplete="off"
+					  aria-describedby="editor-help">
+					<div id="editor-help" class="sr-only">
+						Note editor. Changes are automatically saved as you type
+					</div>
+					<input id="noteTitle" 
+						   name="title" 
+						   placeholder="Note title..." 
+						   aria-label="Note title" 
+						   aria-describedby="title-help"  
+						   required/>
+					<div id="title-help" class="sr-only">
+						Enter a title for your note
+					</div>
+					<textarea id="noteBody" 
+							  name="body" 
+							  rows="10" 
+							  placeholder="Write your notes..." 
+							  aria-label="Note content"
+							  aria-describedby="body-help">
+					</textarea>
+					<div id="body-help" class="sr-only">
+						Write your note content here. Auto-saves every 2 seconds.
+					</div>
+					<div class="form-actions" role="group" aria-label="Note actions">
+						<button type="submit"
+								id="saveBtn"
+								aria-describedby="save-help"
+								title="Save note (Ctrl+S)">
+							Save
+						</button>
+						<div id="save-help" class="sr-only">
+							Saves the current note to local storage
+						</div>
 					</div>
 				</form>
 			</section>
 		</main>
 
 		<script type="module" src="src/app.js"></script>
+
+		<!-- Status announcements for screen readers -->
+		<div id="status"
+			 class="status"
+			 aria-live="polite"
+			 aria-atomic="true"
+			 role="status">
+		</div>
+
+		<!-- Skip link for keyboard users -->
+		<a href="#noteTitle" class="skip-link">Skip to main content</a>
 	</body>
 </html>

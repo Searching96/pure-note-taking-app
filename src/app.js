@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+    if ((e.ctrlKey || e.metaKey) && e.altKey && e.key === 'n') {
       e.preventDefault();
       createNewNote();
     }

@@ -64,8 +64,8 @@ Implementation phases
 **Phase 2 — Core features (1–2 hours)**
 - [x] Implement `src/store.js` with `loadNotes()` and `saveNotes()`.
 - [x] Implement `src/utils.js` (debounce, sanitizeHTML, simple uuid).
-- [ ] Implement `src/ui.js` to render notes list, editor, and wire CRUD actions.
-- [ ] Ensure keyboard shortcuts and basic focus management.
+- [x] Implement `src/ui.js` to render notes list, editor, and wire CRUD actions.
+- [x] Ensure keyboard shortcuts and basic focus management.
 
 **Phase 3 — Accessibility & UX (30–60m)**
 - [ ] Add ARIA attributes, `aria-live` status messages, and focus traps where needed.
@@ -129,27 +129,6 @@ Next steps (if you want me to continue)
 3. Add accessibility improvements and finalize the guide.
 
 When you confirm, I will create the files and run smoke checks. If you want tests run with a test runner, tell me and I will add a minimal `package.json` and dev dependency.
-
-Current Status (Updated: August 17, 2025)
------------------------------------------
-✅ **Phase 1 - COMPLETE**
-- `index.html`: Semantic structure with header, sidebar, editor sections
-- `styles/variables.css`: Complete CSS custom properties system (33 lines)  
-- `styles/app.css`: Full responsive layout with button styles, form styling, focus states
-- `src/app.js`: Enhanced bootstrap with event handling, keyboard shortcuts, status messages
-
-📋 **Files Created:**
-- `index.html` (34 lines) - Semantic markup with ARIA labels
-- `styles/variables.css` (33 lines) - CSS custom properties only
-- `styles/app.css` (281 lines) - Complete responsive styling
-- `src/app.js` (105 lines) - Enhanced event handling and UX
-- `IMPLEMENTATION_PLAN.md` - This planning document
-- `SYSTEM_PROMPT.md` - AI assistant guidelines
-
-🚧 **Ready for Phase 2:**
-- Needs: `src/store.js`, `src/ui.js`, `src/utils.js`, `tests/utils.test.js`, `README.md`
-
-Requirements coverage (this plan)
 --------------------------------
 - Implementation plan file: Done (this document).
 - The actual teaching Markdown and code implementation: Planned (next steps in this plan).
