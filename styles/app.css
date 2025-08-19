@@ -437,10 +437,30 @@ textarea:focus {
 	background: var(--color-primary);
 }
 
-/* Improved button contrast */
 .btn:disabled {
 	opacity: 0.6;
 	cursor: not-allowed;
+}
+
+/* Focus styles for note list navigation */
+.note-item:focus {
+	background: #f8f9fa;
+	outline: 1px solid #e5e7eb;
+	outline-offset: 1px;
+	border-left: 3px solid #d1d5db;
+	transition: all 0.15s ease;
+}
+
+.note-item:focus .note-title {
+	color: #374151;
+}
+
+.note-item:focus .note-excerpt {
+	color: #6b7280;
+}
+
+.note-item:focus .note-date {
+	color: #9ca3af;
 }
 
 /* High contrast mode support */

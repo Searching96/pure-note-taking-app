@@ -172,6 +172,21 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.searchInput.select();
     }
 
+    // Ctrl+L to focus note list (like many apps use for sidebar)
+    if ((e.ctrlKey || e.metaKey) && e.key === 'l' && !e.target.matches('input, textarea')) {
+      e.preventDefault();
+      
+      const activeNote = elements.noteList.querySelector('.note-item.active');
+      const firstNote = elements.noteList.querySelector('.note-item');
+      const targetNote = activeNote || firstNote;
+      
+      if (targetNote) {
+        targetNote.focus();
+      } else {
+        elements.noteList.focus();
+      }
+    }
+
     // Use Escape for new note (works reliably, no browser conflicts)
     if (e.key === 'Escape' && !e.target.matches('input, textarea')) {
       e.preventDefault();
@@ -203,11 +218,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Enhanced keyboard navigation for note list
   elements.noteList.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      const firstNote = elements.noteList.querySelector('.note-item');
-      if (firstNote) {
-        firstNote.click();
+    // Only handle when noteList itself is focused, not individual items
+    if (document.activeElement === elements.noteList) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const activeNote = elements.noteList.querySelector('.note-item.active');
+        const firstNote = elements.noteList.querySelector('.note-item');
+        const targetNote = activeNote || firstNote;
+        if (targetNote) {
+          targetNote.focus();
+        }
       }
     }
   });

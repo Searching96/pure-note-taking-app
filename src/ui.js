@@ -182,12 +182,16 @@ function handleNoteItemKeydown(e) {
 		case 'ArrowDown':
 			e.preventDefault();
 			const nextIndex = Math.min(currentIndex + 1, noteItems.length - 1);
-			noteItems[nextIndex]?.focus();
+			if (noteItems[nextIndex]) {
+				noteItems[nextIndex].focus();
+			}
 			break;
 		case 'ArrowUp':
 			e.preventDefault();
 			const prevIndex = Math.max(currentIndex - 1, 0);
-			noteItems[prevIndex]?.focus();
+			if (noteItems[prevIndex]) {
+				noteItems[prevIndex].focus();
+			}
 			break;
 		case 'Enter':
 		case ' ':
