@@ -72,9 +72,9 @@ Implementation phases
 - [x] Implement visible focus styles and a keyboard-only usage walkthrough in `README.md`.
 
 **Phase 4 — Performance, security & tests (30–60m)**
-- [ ] Add debounce for search and autosave.
-- [ ] Use `textContent`/sanitizer to prevent XSS.
-- [ ] Add `tests/utils.test.js` for `debounce` and `sanitizeHTML`.
+- [x] Add debounce for search and autosave.
+- [x] Use `textContent`/sanitizer to prevent XSS.
+- [x] Add `tests/utils.test.js` for `debounce` and `sanitizeHTML`.
 
 **Phase 5 — Final docs and polish (15–30m)**
 - [ ] Update `README.md` to include the learning guide, run steps, and next steps.
