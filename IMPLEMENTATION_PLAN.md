@@ -14,8 +14,8 @@ Checklist (requirements)
 - [x] Produce an implementation plan (this file).
 - [x] Implement app skeleton (`index.html`, `styles/*`, `src/*`).
 - [x] Implement persistence (`src/store.js`) with `localStorage` abstraction.
-- [ ] Implement UI rendering and event handling (`src/ui.js`, `src/app.js`).
-- [ ] Add utilities (`src/utils.js`) with tests for `debounce` and `sanitizeHTML`.
+- [x] Implement UI rendering and event handling (`src/ui.js`, `src/app.js`).
+- [x] Add utilities (`src/utils.js`) with tests for `debounce` and `sanitizeHTML`.
 - [x] Include accessibility, performance, and security checks and small smoke tests.
 
 Assumptions
@@ -77,8 +77,8 @@ Implementation phases
 - [x] Add `tests/utils.test.js` for `debounce` and `sanitizeHTML`.
 
 **Phase 5 — Final docs and polish (15–30m)**
-- [ ] Update `README.md` to include the learning guide, run steps, and next steps.
-- [ ] Add the small smoke test instructions and map requirements to status.
+- [x] Update `README.md` to include the learning guide, run steps, and next steps.
+- [x] Add the small smoke test instructions and map requirements to status.
 
 Development details (per file)
 -----------------------------
