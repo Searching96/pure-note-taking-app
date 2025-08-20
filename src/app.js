@@ -192,6 +192,11 @@ document.addEventListener('DOMContentLoaded', () => {
     saveCurrentNote();
   });
 
+  elements.deleteBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    deleteCurrentNote();
+  });
+
   // Note selection from list
   elements.noteList.addEventListener('click', (e) => {
     const notePreview = e.target.closest('.note-preview');
