@@ -155,7 +155,7 @@ describe('Store Module', () => {
   });
 
   describe('clearNotes()', () => {
-        it('should clear all notes from storage', () => {
+    it('should clear all notes from storage', () => {
       saveNotes(sampleNotes);
       const result = clearNotes();
       expect(result).toBe(true);
@@ -167,7 +167,7 @@ describe('Store Module', () => {
       localStorage.removeItem.mockImplementationOnce(() => {
         throw new Error('Clear error');
       });
-      
+
       const result = clearNotes();
       expect(result).toBe(false);
       expect(console.error).toHaveBeenCalled();
